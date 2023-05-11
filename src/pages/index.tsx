@@ -1,14 +1,19 @@
 "use client";
 // Next
 import Image from "next/image";
+import Link from "next/link";
+
 // Components
-import Header from "../components/Header";
+import Layout from "./layout";
+
 // Icons
 import { BsCart2 } from "react-icons/bs";
+
+// CSS
+import styles from "./index.module.css";
+
 // AntDesign
 import { Button, Row, Col, Card } from "antd";
-// CSS
-import styles from "./page.module.css";
 const { Meta } = Card;
 
 export default function Home() {
@@ -65,13 +70,7 @@ export default function Home() {
 
   return (
     <>
-      {/* Header */}
-      <div>
-        <Header />
-      </div>
-
-      {/* Main */}
-      <div className="flex flex-col px-[10%] bg-[#EFFCF6] h-max phones:justify-center">
+      <Layout>
         {/* Logo + Carrinho */}
         <div className="flex flex-row justify-between items-center py-20 px-[7%] phones:px-0">
           <a href="#" className="text-3xl text-black font-bold phones:text-xl">
@@ -108,44 +107,46 @@ export default function Home() {
           >
             {produtos.map((value, key) => (
               <Col key={key} span={6} className="flex flex-row justify-center">
-                <Card
-                  className="w-full shadow-md phones:min-w-max"
-                  hoverable
-                  cover={
-                    <Image
-                      alt="example"
-                      src={`/images/card${key + 1}.jpg`}
-                      width={500}
-                      height={500}
-                    />
-                  }
-                >
-                  <Meta
-                    title={
-                      <div className="flex justify-between">
-                        <p className="font-bold">{value.produto}</p>
-                        <p>R${value.valor}</p>
-                      </div>
+                <Link href="/produto">
+                  <Card
+                    className="w-full shadow-md phones:min-w-max"
+                    hoverable
+                    cover={
+                      <Image
+                        alt="example"
+                        src={`/images/card${key + 1}.jpg`}
+                        width={500}
+                        height={500}
+                      />
                     }
-                    description="Lorem ipsum dollor at amet ipsum dollor lorem"
-                  />
-                  <div className="flex justify-end gap-[2%] items-center py-[1%]">
-                    <div className={styles.addedToCar}>
-                      <p>
-                        <span></span>
-                        Adicionar ao carrinho
-                      </p>
+                  >
+                    <Meta
+                      title={
+                        <div className="flex justify-between">
+                          <p className="font-bold">{value.produto}</p>
+                          <p>R${value.valor}</p>
+                        </div>
+                      }
+                      description="Lorem ipsum dollor at amet ipsum dollor lorem"
+                    />
+                    <div className="flex justify-end gap-[2%] items-center py-[1%]">
+                      <div className={styles.addedToCar}>
+                        <p>
+                          <span></span>
+                          Adicionar ao carrinho
+                        </p>
+                      </div>
+                      <div>
+                        <BsCart2 className="text-lg hover:text-blue-700 hover:-rotate-12" />
+                      </div>
                     </div>
-                    <div>
-                      <BsCart2 className="text-lg hover:text-blue-700 hover:-rotate-12" />
-                    </div>
-                  </div>
-                </Card>
+                  </Card>
+                </Link>
               </Col>
             ))}
           </Row>
         </div>
-      </div>
+      </Layout>
     </>
   );
 }
