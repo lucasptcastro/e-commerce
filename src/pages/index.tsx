@@ -101,15 +101,13 @@ export default function Home() {
           <h1 className="font-bold text-2xl phones:text-center">
             Confira nossos produtos
           </h1>
-          <Row
-            gutter={[16, 24]}
-            className="justify-center items-center p-0 phones:flex-col"
-          >
+
+          <div className="flex flex-row gap-3 flex-wrap justify-center items-center">
             {produtos.map((value, key) => (
-              <Col key={key} span={6} className="flex flex-row justify-center">
+              <div key={key}>
                 <Link href={`/produto/${key + 1}`}>
                   <Card
-                    className="w-full shadow-md phones:min-w-max"
+                    className="w-[319px] shadow-md phones:w-auto"
                     hoverable
                     cover={
                       <Image
@@ -142,9 +140,9 @@ export default function Home() {
                     </div>
                   </Card>
                 </Link>
-              </Col>
+              </div>
             ))}
-          </Row>
+          </div>
         </div>
       </Layout>
     </>
