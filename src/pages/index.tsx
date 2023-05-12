@@ -72,7 +72,7 @@ export default function Home() {
     <>
       <Layout>
         {/* Logo + Carrinho */}
-        <div className="flex flex-row justify-between items-center py-20 px-[7%] phones:px-0">
+        <div className="flex flex-row justify-between items-center py-20">
           <a href="#" className="text-3xl text-black font-bold phones:text-xl">
             E-commerce
           </a>
@@ -83,7 +83,7 @@ export default function Home() {
         </div>
 
         {/* Card principal */}
-        <div className="flex flex-col gap-10 py-10 px-[3%] mx-[7%] rounded-xl bg-[#8EEDC7] phones:mx-0">
+        <div className="flex flex-col gap-10 py-10 px-[3%] rounded-xl bg-[#8EEDC7]">
           <h3 className="text-2xl font-bold phones:text-center phones:text-base">
             Olá, somos o E-commerce! Somos 100% nacional e o maior revendedor de
             produtos eletrônicos do país!
@@ -97,7 +97,7 @@ export default function Home() {
           </button>
         </div>
         {/* Produtos */}
-        <div className="flex flex-col py-10 px-[7%] gap-10 phones:w-full phones:px-0">
+        <div className="flex flex-col py-10 gap-10 phones:w-full">
           <h1 className="font-bold text-2xl phones:text-center">
             Confira nossos produtos
           </h1>
@@ -107,7 +107,7 @@ export default function Home() {
           >
             {produtos.map((value, key) => (
               <Col key={key} span={6} className="flex flex-row justify-center">
-                <Link href="/produto">
+                <Link href={`/produto/${key + 1}`}>
                   <Card
                     className="w-full shadow-md phones:min-w-max"
                     hoverable
