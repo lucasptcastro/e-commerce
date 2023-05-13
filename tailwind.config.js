@@ -21,6 +21,7 @@ module.exports = {
     },
     screens: {
       phones: { min: "320px", max: "480px" },
+      responsive: { max: "761px" },
     },
   },
   plugins: [],
