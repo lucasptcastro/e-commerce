@@ -1,6 +1,10 @@
 "use client";
 // Next
 import Image from "next/image";
+import Link from "next/link";
+
+// React
+import React from "react";
 
 // Components
 import Layout from "../layout";
@@ -32,7 +36,7 @@ export async function getStaticProps({ params }: any) {
 }
 
 export default function Post({ productData }: any) {
-  console.log(productData.data[0]);
+  const [quantity, setQuantity] = React.useState(0);
 
   const productsInformations = [
     {
@@ -77,16 +81,16 @@ export default function Post({ productData }: any) {
   return (
     <>
       <Layout>
-        <div className="flex flex-col gap-9">
+        <div className="flex flex-col gap-12">
           {/* Logo + Carrinho */}
-          <div className="flex flex-row justify-between items-center py-20 phones:px-0">
+          <div className="flex flex-row justify-between items-center pt-20">
             <div>
-              <a
-                href="#"
+              <Link
+                href="/"
                 className="text-3xl text-black font-bold phones:text-xl"
               >
                 E-commerce
-              </a>
+              </Link>
 
               {/* Breadcrumb */}
               <Breadcrumb
@@ -100,28 +104,30 @@ export default function Post({ productData }: any) {
             </div>
           </div>
 
-          {/* Carrinho + produto */}
-          <div className="flex flex-row gap-[3%]">
+          {/* Imagem + Descrição */}
+          <div className="flex flex-row justify-between h-[500px] gap-[3%] responsive:flex-col responsive:w-full responsive:h-fit">
             {/* Imagem */}
-            <div className="">
+            <div className="w-[65%] responsive:w-full ">
               <Image
-                className="rounded-xl shadow-md w-[800px] h-[500px]"
+                className="rounded-xl shadow-md w-full h-[500px] object-cover object-center responsive:w-full responsive:h-fit"
                 alt="example"
                 src={`/images/card1.jpg`}
-                width={800}
+                width={500}
                 height={500}
               />
             </div>
 
             {/* Descrição */}
-            <div className="flex flex-col justify-between text-left">
-              <div>
+            <div className="flex flex-col justify-between text-left py-[2%] w-[32%] responsive:w-full responsive:text-center responsive:gap-[3vh]">
+              {/* Título do produto */}
+              <div className="flex flex-col gap-5">
                 <h1 className="font-bold text-3xl">
                   {productData.data[0].product}
                 </h1>
                 <p>Lorem ipsum dollor at amet ipsum dollor lorem</p>
-                <hr />
               </div>
+
+              <hr />
 
               {/* Valor */}
               <div>
@@ -129,35 +135,66 @@ export default function Post({ productData }: any) {
                   R${productData.data[0].value}
                 </h3>
                 <p className="text-xs">Ou em 12x de R$ 45,00</p>
-                <hr />
               </div>
 
-              <button className="w-full h-10 rounded-xl bg-[#27ab83] text-white hover:bg-[#8EEDC7] phones:mx-auto">
+              {/* Quantidade */}
+              <div className="flex flex-row justify-between items-center text-3xl px-[10%] w-[50%] h-[10%] rounded-md bg-[#ECECEC] responsive:mx-auto">
+                <button
+                  onClick={() => {
+                    if (quantity != 0) {
+                      setQuantity(quantity - 1);
+                    }
+                  }}
+                  className="text-3xl font-bold"
+                >
+                  -
+                </button>
+                <span className="text-3xl font-bold">{quantity}</span>
+                <button
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="text-3xl font-bold"
+                >
+                  +
+                </button>
+              </div>
+
+              {/* Comprar */}
+              <hr />
+              <button className="w-full h-10 rounded-xl bg-[#199473] text-white hover:bg-[#27AB83] phones:mx-auto">
                 Comprar
               </button>
             </div>
           </div>
 
           {/* Informações/Detalhes do produto */}
-          <div className="flex flex-row justify-between">
-            <div>
-              <h3 className="font-bold text-2xl">Informações do produto</h3>
+          <div className="flex flex-row justify-between responsive:flex-col responsive:justify-center responsive:gap-[5vh]">
+            {/* Informações */}
+            <div className="w-[50%] responsive:w-full responsive:text-center">
+              <h3 className="font-bold text-3xl phones:text-xl">
+                Informações do produto
+              </h3>
+              <hr className="w-[95%]" />
+
+              <div className="flex flex-col pt-[2%] gap-[1vh]">
+                {productsInformations.map((info, key) => (
+                  <p key={key} className="text-base phones:text-xs">
+                    <strong>Informação {info.id}: </strong>
+                    {info.information}
+                  </p>
+                ))}
+              </div>
+            </div>
+
+            {/* Detalhe */}
+            <div className="w-[50%] responsive:w-full responsive:text-center">
+              <h3 className="font-bold text-3xl phones:text-xl">
+                Detalhes do produto
+              </h3>
               <hr />
 
-              {productsInformations.map((info, key) => (
-                <p key={key} className="text-sm">
-                  <strong>Informação {info.id}: </strong>
-                  {info.information}
-                </p>
-              ))}
-            </div>
-            <div>
-              <div>
-                <h3 className="font-bold text-2xl">Detalhes do produto</h3>
-                <hr />
-
+              <div className="flex flex-col pt-[2%] gap-[1vh]">
                 {productsDetails.map((detail, key) => (
-                  <p key={key} className="text-sm">
+                  <p key={key} className="text-base phones:text-xs">
                     <strong>Detalhe {detail.id}: </strong>
                     {detail.detail}
                   </p>
