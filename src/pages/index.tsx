@@ -71,46 +71,51 @@ export default function Home() {
   return (
     <>
       <Layout>
-        {/* Logo + Carrinho */}
-        <div className="flex flex-row justify-between items-center py-20">
-          <a href="#" className="text-3xl text-black font-bold phones:text-xl">
-            E-commerce
-          </a>
-          <div className="flex flex-row items-center gap-2">
-            <BsCart2 className="text-3xl phones:text-xl" />
-            <p className="phones:text-sm">Carrinho</p>
+        <div className="flex flex-col gap-12">
+          {/* Logo + Carrinho */}
+          <div className="flex flex-row justify-between items-center pt-20">
+            <Link
+              href="/"
+              className="text-3xl text-black font-bold phones:text-xl"
+            >
+              E-commerce
+            </Link>
+            <div className="flex flex-row items-center gap-2">
+              <BsCart2 className="text-3xl phones:text-xl" />
+              <p className="phones:text-sm">Carrinho</p>
+            </div>
           </div>
-        </div>
 
-        {/* Card principal */}
-        <div className="flex flex-col gap-10 py-10 px-[3%] rounded-xl bg-[#8EEDC7]">
-          <h3 className="text-2xl font-bold phones:text-center phones:text-base">
-            Olá, somos o E-commerce! Somos 100% nacional e o maior revendedor de
-            produtos eletrônicos do país!
-          </h3>
-          <p className="text-xl phones:text-center phones:text-base">
-            Contate nossos revendedores pelo núnero: <br />
-            (84) 99999-9999
-          </p>
-          <button className="w-40 h-10 rounded-xl bg-blue-600 text-white hover:bg-blue-500 phones:mx-auto">
-            Comprar agora
-          </button>
-        </div>
-        {/* Produtos */}
-        <div className="flex flex-col py-10 gap-10 phones:w-full">
-          <h1 className="font-bold text-2xl phones:text-center">
-            Confira nossos produtos
-          </h1>
+          {/* Card principal */}
+          <div className="flex flex-col gap-10 py-10 px-[3%] rounded-xl bg-[#8EEDC7]">
+            <h3 className="text-2xl font-bold phones:text-center phones:text-base">
+              Olá, somos o E-commerce! Somos 100% nacional e o maior revendedor
+              de produtos eletrônicos do país!
+            </h3>
+            <p className="text-xl phones:text-center phones:text-base">
+              Contate nossos revendedores pelo núnero: <br />
+              (84) 99999-9999
+            </p>
+            <button className="w-40 h-10 rounded-xl bg-blue-600 text-white hover:bg-blue-500 phones:mx-auto">
+              Comprar agora
+            </button>
+          </div>
 
-          <div className="flex flex-row gap-3 flex-wrap justify-center items-center">
-            {produtos.map((value, key) => (
-              <div key={key}>
-                <Link href={`/produto/${key + 1}`}>
+          {/* Produtos */}
+          <div className="flex flex-col gap-10 phones:w-full">
+            <h1 className="font-bold text-2xl phones:text-center">
+              Confira nossos produtos
+            </h1>
+
+            <div className="flex flex-wrap gap-3 items-center w-full responsive:justify-center">
+              {produtos.map((value, key) => (
+                <Link href={`/produto/${key + 1}`} key={key}>
                   <Card
-                    className="w-[319px] shadow-md phones:w-auto"
+                    className="w-[315px] shadow-md rounded-2xl"
                     hoverable
                     cover={
                       <Image
+                        className="w-full h-[200px] object-cover object-center responsive:h-fit"
                         alt="example"
                         src={`/images/card${key + 1}.jpg`}
                         width={500}
@@ -140,8 +145,8 @@ export default function Home() {
                     </div>
                   </Card>
                 </Link>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </Layout>

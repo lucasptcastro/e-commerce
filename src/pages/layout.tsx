@@ -18,7 +18,7 @@ export default function RootLayout({
         <meta name="E-commerce" />
       </Head>
       <Header />
-      <main className="flex flex-col px-[15.5%] bg-[#EFFCF6] h-max phones:justify-center">
+      <main className="flex flex-col pb-20 px-[15.5%] bg-[#EFFCF6] h-full responsive:justify-center responsive:px-[4%]">
         {children}
       </main>
     </>
