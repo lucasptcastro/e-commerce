@@ -2,12 +2,14 @@
 // Next
 import Image from "next/image";
 import Link from "next/link";
+import React from "react";
 
 // Components
 import Layout from "./layout";
 
 // Icons
 import { BsCart2 } from "react-icons/bs";
+import { BsFillCartFill } from "react-icons/bs";
 
 // CSS
 import styles from "./index.module.css";
@@ -17,6 +19,7 @@ import { Button, Row, Col, Card } from "antd";
 const { Meta } = Card;
 
 export default function Home() {
+  const [carProducts, setCarProducts] = React.useState(0);
   const produtos = [
     {
       produto: "produto1",
@@ -73,15 +76,23 @@ export default function Home() {
       <Layout>
         <div className="flex flex-col gap-12">
           {/* Logo + Carrinho */}
-          <div className="flex flex-row justify-between items-center pt-20">
+          <div className="flex flex-row justify-between items-center">
             <Link
               href="/"
               className="text-3xl text-black font-bold phones:text-xl"
             >
               E-commerce
             </Link>
-            <div className="flex flex-row items-center gap-2">
-              <BsCart2 className="text-3xl phones:text-xl" />
+            <div className="flex flex-row items-center gap-5">
+              <div className="flex justify-center items-center text-center">
+                <BsFillCartFill
+                  className="absolute text-4xl phones:text-3xl"
+                  color="#014D40"
+                />
+                <span className="absolute text-[1.8vh] text-white phones:text-sm">
+                  {carProducts}
+                </span>
+              </div>
               <p className="phones:text-sm">Carrinho</p>
             </div>
           </div>
@@ -108,7 +119,7 @@ export default function Home() {
             </h1>
 
             <div className="flex flex-wrap gap-3 items-center w-full responsive:justify-center">
-              {produtos.map((value, key) => (
+              {produtos.map((product, key) => (
                 <Link href={`/produto/${key + 1}`} key={key}>
                   <Card
                     className="w-[315px] shadow-md rounded-2xl"
@@ -126,22 +137,32 @@ export default function Home() {
                     <Meta
                       title={
                         <div className="flex justify-between">
-                          <p className="font-bold">{value.produto}</p>
-                          <p>R${value.valor}</p>
+                          <p className="font-bold">{product.produto}</p>
+                          <p>R${product.valor}</p>
                         </div>
                       }
                       description="Lorem ipsum dollor at amet ipsum dollor lorem"
                     />
-                    <div className="flex justify-end gap-[2%] items-center py-[1%]">
-                      <div className={styles.addedToCar}>
-                        <p>
+                    <div className="flex justify-between items-center pt-[5%]">
+                      <p className="text-white bg-[#27AB83] rounded-xl px-2">
+                        Item no carrinho
+                      </p>
+                      {/* <p>
                           <span></span>
                           Adicionar ao carrinho
-                        </p>
-                      </div>
-                      <div>
-                        <BsCart2 className="text-lg hover:text-blue-700 hover:-rotate-12" />
-                      </div>
+                        </p> */}
+                      <BsCart2
+                        className="text-lg hover:text-blue-700 hover:-rotate-12 absolute right-5"
+                        onClick={() => {
+                          if (carProducts <= 99) {
+                            setCarProducts(carProducts + 1);
+                            localStorage.setItem(
+                              `@e-commerce/${product.produto}`,
+                              key.toString()
+                            );
+                          }
+                        }}
+                      />
                     </div>
                   </Card>
                 </Link>
