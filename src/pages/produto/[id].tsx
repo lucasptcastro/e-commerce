@@ -10,7 +10,7 @@ import React from "react";
 import Layout from "../layout";
 
 // Icons
-import { BsCart2 } from "react-icons/bs";
+import { BsFillCartFill } from "react-icons/bs";
 
 // AntDesign
 import { Breadcrumb } from "antd";
@@ -83,7 +83,7 @@ export default function Post({ productData }: any) {
       <Layout>
         <div className="flex flex-col gap-12">
           {/* Logo + Carrinho */}
-          <div className="flex flex-row justify-between items-center pt-20">
+          <div className="flex flex-row justify-between items-center">
             <div>
               <Link
                 href="/"
@@ -98,8 +98,16 @@ export default function Post({ productData }: any) {
                 items={[{ title: "Home", href: "/" }, { title: "Produto" }]}
               />
             </div>
-            <div className="flex flex-row items-center gap-2">
-              <BsCart2 className="text-3xl phones:text-xl" />
+            <div className="flex flex-row items-center gap-5">
+              <div className="flex justify-center items-center text-center">
+                <BsFillCartFill
+                  className="absolute text-4xl phones:text-3xl"
+                  color="#014D40"
+                />
+                <span className="absolute text-[1.8vh] text-white phones:text-sm">
+                  10
+                </span>
+              </div>
               <p className="phones:text-sm">Carrinho</p>
             </div>
           </div>
