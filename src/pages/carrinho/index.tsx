@@ -1,58 +1,19 @@
 "use client";
 // Next
 import Image from "next/image";
-import Link from "next/link";
-
 // React
 import React from "react";
-
 // Components
 import Layout from "../layout";
-
 // Icons
-import { BsFillCartFill } from "react-icons/bs";
 import { FiTrash } from "react-icons/fi";
-
-// AntDesign
-import { Breadcrumb } from "antd";
+import { Button } from "antd";
 
 export default function Carrinho(produtos: Array<string>) {
-  console.log(produtos);
-
   return (
     <>
-      <Layout>
+      <Layout props="Carrinho">
         <div className="flex flex-col gap-12">
-          {/* Logo + Carrinho */}
-          <div className="flex flex-row justify-between items-center">
-            <div>
-              <Link
-                href="/"
-                className="text-3xl text-black font-bold phones:text-xl"
-              >
-                E-commerce
-              </Link>
-
-              {/* Breadcrumb */}
-              <Breadcrumb
-                separator=">"
-                items={[{ title: "Home", href: "/" }, { title: "Carrinho" }]}
-              />
-            </div>
-            <div className="flex flex-row items-center gap-5">
-              <div className="flex justify-center items-center text-center">
-                <BsFillCartFill
-                  className="absolute text-4xl phones:text-3xl"
-                  color="#014D40"
-                />
-                <span className="absolute text-[1.8vh] text-white phones:text-sm">
-                  10
-                </span>
-              </div>
-              <p className="phones:text-sm">Carrinho</p>
-            </div>
-          </div>
-
           {/* Items */}
           <div className="flex flex-col gap-[3vh]">
             <div>
@@ -74,19 +35,34 @@ export default function Carrinho(produtos: Array<string>) {
                   />
                   <p>Produto1</p>
                 </div>
-
                 {/* Informações */}
-
                 <p className="font-bold">R$45,00</p>
                 <p className="font-bold">2</p>
                 <p className="font-bold">R$90,00</p>
-
                 {/* Remover produto */}
                 <div>
                   <FiTrash color="#8E2C2C" size={30} />
                 </div>
               </div>
+              <hr />
             </div>
+          </div>
+
+          {/* Total value */}
+          <div className="flex flex-row justify-end items-center text-2xl">
+            <h1>
+              Valor total <br /> <strong>R$535,99</strong>
+            </h1>
+          </div>
+
+          {/* Continue buying + Finish order */}
+          <div className="flex flex-row justify-end items-center gap-[1vh]">
+            <button className="w-48 h-10 rounded-xl bg-blue-600 text-white hover:bg-blue-500 phones:mx-auto">
+              Continuar comprando
+            </button>
+            <button className="w-40 h-10 rounded-xl bg-[#199473] text-white hover:bg-[#42A88C] phones:mx-auto">
+              Finalizar pedido
+            </button>
           </div>
         </div>
       </Layout>
