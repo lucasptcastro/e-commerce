@@ -1,17 +1,12 @@
 "use client";
 // Next
 import Image from "next/image";
-import Link from "next/link";
 // React
 import React from "react";
 // Components
 import Layout from "../layout";
 import { getAllPostIds, getProductData } from "../../lib/produtos";
-import { useCarContext, CarProvider } from "../../context/CarContext";
-// Icons
-import { BsFillCartFill } from "react-icons/bs";
-// AntDesign
-import { Breadcrumb } from "antd";
+import { useCarContext } from "../../context/CarContext";
 
 // Collects the URLs that will be used as a parameter to leave dynamic
 export async function getStaticPaths() {
@@ -33,6 +28,7 @@ export async function getStaticProps({ params }: any) {
 export default function Post({ productData }: any) {
   const [quantity, setQuantity] = React.useState(0);
 
+  // Context contain the datas about the products (id, value, name, quantity)
   const carContext = useCarContext();
   const carContextTotal: any = carContext[0];
 
@@ -78,43 +74,11 @@ export default function Post({ productData }: any) {
       detail: "Lorem ipsum dollor at amet",
     },
   ];
+
   return (
     <>
-      <Layout>
+      <Layout props={"Produto"}>
         <div className="flex flex-col gap-12">
-          {/* Logo + Carrinho */}
-          <div className="flex flex-row justify-between items-center">
-            <div>
-              <Link
-                href="/"
-                className="text-3xl text-black font-bold phones:text-xl"
-              >
-                E-commerce
-              </Link>
-
-              {/* Breadcrumb */}
-              <Breadcrumb
-                separator=">"
-                items={[
-                  { title: <Link href="/">Home</Link> },
-                  { title: "Produto" },
-                ]}
-              />
-            </div>
-            <div className="flex flex-row items-center gap-5">
-              <div className="flex justify-center items-center text-center">
-                <BsFillCartFill
-                  className="absolute text-4xl phones:text-3xl"
-                  color="#014D40"
-                />
-                <span className="absolute text-[1.8vh] text-white phones:text-sm">
-                  {carContextTotal}
-                </span>
-              </div>
-              <p className="phones:text-sm">Carrinho</p>
-            </div>
-          </div>
-
           {/* Imagem + Descrição */}
           <div className="flex flex-row justify-between h-[500px] gap-[3%] responsive:flex-col responsive:w-full responsive:h-fit">
             {/* Imagem */}
