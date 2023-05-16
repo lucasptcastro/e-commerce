@@ -1,12 +1,64 @@
+"use client";
+// Next
+import Link from "next/link";
 import React from "react";
 
-const Index: React.FC = () => {
+// Components
+import { useCarContext } from "../../context/CarContext";
+
+// Icons
+import { BsFillCartFill } from "react-icons/bs";
+import { Breadcrumb } from "antd";
+
+interface IHome {
+  breadcrumb: string;
+}
+
+const Index: React.FC<IHome> = (props) => {
+  const carContext = useCarContext();
+  const carContextTotal: any = carContext[0];
+
   return (
-    <div className="fixed flex justify-between px-[15.5%] py-[0.3%] text-[1.5vh] bg-[#27ab83] text-white w-full z-50 phones:py-0 phones:px-7 responsive:px-[4%]">
-      <p className="phones:hidden">(84)99999-9999</p>
-      <p>Só hoje, frete grátis para todo o Brasil</p>
-      <p>Redes sociais</p>
-    </div>
+    <>
+      {/* Logo + Car */}
+      <div className="flex flex-row justify-between items-center">
+        {/* Company title + breadcrumb */}
+        <div>
+          <Link
+            href="/"
+            className="text-3xl text-black font-bold phones:text-xl"
+          >
+            E-commerce
+          </Link>
+
+          {/* Breadcrumb */}
+          <Breadcrumb
+            separator=">"
+            items={[
+              { title: <Link href="/">E-commerce</Link> },
+              { title: props.breadcrumb },
+            ]}
+          />
+        </div>
+
+        {/* Link + Car */}
+        <Link href="/carrinho" className="flex flex-row items-center gap-5">
+          <div className="flex justify-center items-center text-center">
+            {/* Icon */}
+            <BsFillCartFill
+              className="absolute text-4xl phones:text-3xl"
+              color="#014D40"
+            />
+
+            {/* Car with counter */}
+            <span className="absolute text-[1.8vh] text-white phones:text-sm">
+              {carContextTotal}
+            </span>
+          </div>
+          <p className="phones:text-sm">Carrinho</p>
+        </Link>
+      </div>
+    </>
   );
 };
 
