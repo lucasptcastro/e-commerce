@@ -2,20 +2,16 @@
 // Next
 import Image from "next/image";
 import Link from "next/link";
-
 // React
 import React from "react";
-
 // Components
 import Layout from "../layout";
-
+import { getAllPostIds, getProductData } from "../../lib/produtos";
+import { useCarContext, CarProvider } from "../../context/CarContext";
 // Icons
 import { BsFillCartFill } from "react-icons/bs";
-
 // AntDesign
 import { Breadcrumb } from "antd";
-
-import { getAllPostIds, getProductData } from "../../lib/produtos";
 
 // Collects the URLs that will be used as a parameter to leave dynamic
 export async function getStaticPaths() {
@@ -25,7 +21,6 @@ export async function getStaticPaths() {
     fallback: false,
   };
 }
-
 export async function getStaticProps({ params }: any) {
   const productData = getProductData(params.id);
   return {
@@ -37,6 +32,11 @@ export async function getStaticProps({ params }: any) {
 
 export default function Post({ productData }: any) {
   const [quantity, setQuantity] = React.useState(0);
+
+  const carContext = useCarContext();
+  const carContextTotal: any = carContext[0];
+
+  console.log(carContextTotal);
 
   const productsInformations = [
     {
@@ -95,7 +95,10 @@ export default function Post({ productData }: any) {
               {/* Breadcrumb */}
               <Breadcrumb
                 separator=">"
-                items={[{ title: "Home", href: "/" }, { title: "Produto" }]}
+                items={[
+                  { title: <Link href="/">Home</Link> },
+                  { title: "Produto" },
+                ]}
               />
             </div>
             <div className="flex flex-row items-center gap-5">
@@ -105,7 +108,7 @@ export default function Post({ productData }: any) {
                   color="#014D40"
                 />
                 <span className="absolute text-[1.8vh] text-white phones:text-sm">
-                  10
+                  {carContextTotal}
                 </span>
               </div>
               <p className="phones:text-sm">Carrinho</p>

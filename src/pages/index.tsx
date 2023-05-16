@@ -2,10 +2,11 @@
 // Next
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 
 // Components
 import Layout from "./layout";
+import { useCarContext, CarProvider } from "../context/CarContext";
 
 // Icons
 import { BsCart2 } from "react-icons/bs";
@@ -71,8 +72,14 @@ export default function Home() {
     },
   ];
 
+  const carContext = useCarContext();
+  const carContextTotal: any = carContext[0];
+  const carContextToggleTotal: any = carContext[1];
+
+  console.log(carContext);
+
   return (
-    <>
+    <CarProvider>
       <Layout>
         <div className="flex flex-col gap-12">
           {/* Logo + Carrinho */}
@@ -90,7 +97,7 @@ export default function Home() {
                   color="#014D40"
                 />
                 <span className="absolute text-[1.8vh] text-white phones:text-sm">
-                  {carProducts}
+                  {carContextTotal}
                 </span>
               </div>
               <p className="phones:text-sm">Carrinho</p>
@@ -153,15 +160,7 @@ export default function Home() {
                         </p> */}
                       <BsCart2
                         className="text-lg hover:text-blue-700 hover:-rotate-12 absolute right-5"
-                        onClick={() => {
-                          if (carProducts <= 99) {
-                            setCarProducts(carProducts + 1);
-                            localStorage.setItem(
-                              `@e-commerce/${product.produto}`,
-                              key.toString()
-                            );
-                          }
-                        }}
+                        onClick={carContextToggleTotal}
                       />
                     </div>
                   </Card>
@@ -171,6 +170,6 @@ export default function Home() {
           </div>
         </div>
       </Layout>
-    </>
+    </CarProvider>
   );
 }
