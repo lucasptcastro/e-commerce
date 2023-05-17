@@ -5,11 +5,20 @@ import Image from "next/image";
 import React from "react";
 // Components
 import Layout from "../layout";
+import { useCarContext } from "../../context/CarContext";
 // Icons
 import { FiTrash } from "react-icons/fi";
-import { Button } from "antd";
 
-export default function Carrinho(produtos: Array<string>) {
+export default function Carrinho() {
+  // useContext
+  const carContext: any = useCarContext();
+  const productsInCar = carContext[1];
+
+  const removeProductFromCar = carContext[3];
+  const getTotalValueOfProducts = carContext[4];
+
+  console.log(getTotalValueOfProducts);
+
   return (
     <>
       <Layout props="Carrinho">
@@ -21,37 +30,54 @@ export default function Carrinho(produtos: Array<string>) {
                 Itens do carrinho
               </h1>
             </div>
+          </div>
 
-            {/* Produtos */}
-            <div className="flex flex-col gap-5">
-              <div className="flex flex-row justify-between items-center w-full">
-                <div className="flex flex-row items-center gap-[2vh] w-[90px] h-[70px] responsive:w-full">
-                  <Image
-                    className="rounded-xl shadow-md w-full h-full object-cover object-center responsive:w-full responsive:h-fit"
-                    alt="example"
-                    src={`/images/card1.jpg`}
-                    width={100}
-                    height={100}
-                  />
-                  <p>Produto1</p>
+          {/* Produtos */}
+          <div className="flex flex-col gap-5">
+            {productsInCar.slice(1).map((product: any, key: number) => (
+              <>
+                <div
+                  className="flex flex-row justify-between items-center w-full"
+                  key={key}
+                >
+                  <div className="flex flex-row items-center gap-[2vh] w-[90px] h-[70px] responsive:w-full">
+                    <Image
+                      className="rounded-xl shadow-md w-full h-full object-cover object-center responsive:w-full responsive:h-fit"
+                      alt="example"
+                      src={`/images/card1.jpg`}
+                      width={100}
+                      height={100}
+                      onClick={() => console.log(product)}
+                    />
+                    <p>{product.name}</p>
+                  </div>
+                  {/* Informações */}
+                  <p className="font-bold">{`R$ ${product.value}`}</p>
+                  <p className="font-bold">{product.quantity}</p>
+                  <p className="font-bold">
+                    {product.value * product.quantity}
+                  </p>
+                  {/* Remover produto */}
+                  <div>
+                    <FiTrash
+                      className="hover:cursor-pointer"
+                      color="#8E2C2C"
+                      size={30}
+                      onClick={() => {
+                        removeProductFromCar(product.id);
+                      }}
+                    />
+                  </div>
                 </div>
-                {/* Informações */}
-                <p className="font-bold">R$45,00</p>
-                <p className="font-bold">2</p>
-                <p className="font-bold">R$90,00</p>
-                {/* Remover produto */}
-                <div>
-                  <FiTrash color="#8E2C2C" size={30} />
-                </div>
-              </div>
-              <hr />
-            </div>
+                <hr />
+              </>
+            ))}
           </div>
 
           {/* Total value */}
           <div className="flex flex-row justify-end items-center text-2xl">
             <h1>
-              Valor total <br /> <strong>R$535,99</strong>
+              Valor total <br /> <strong>R${getTotalValueOfProducts}</strong>
             </h1>
           </div>
 
