@@ -3,107 +3,99 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+
 // Components
 import Layout from "./layout";
 import { useCarContext } from "../context/CarContext";
+
 // Icons
 import { BsCart2 } from "react-icons/bs";
+
 // AntDesign
 import { Card } from "antd";
 const { Meta } = Card;
 
-interface IProductSelected {
-  id?: number;
-  name?: string;
-  value?: string;
-  quantity?: number;
-}
-
 export default function Home() {
   // useContext
-  const carContext = useCarContext();
-  const carContextToggleTotal: any = carContext[1];
+  const carContext: any = useCarContext();
+  const addProductToCar = carContext[2];
+
+  console.log(carContext);
 
   // Products
   const produtos = [
     {
       id: 1,
       name: "produto1",
-      price: "392,00",
+      price: 392.0,
     },
     {
       id: 2,
       name: "produto2",
-      price: "41,00",
+      price: 41.55,
     },
     {
       id: 3,
       name: "produto3",
-      price: "63,00",
+      price: 63.0,
     },
     {
       id: 4,
       name: "produto4",
-      price: "21,00",
+      price: 21.0,
     },
     {
       id: 5,
       name: "produto5",
-      price: "62,00",
+      price: 62.0,
     },
     {
       id: 6,
       name: "produto6",
-      price: "123,00",
+      price: 123.0,
     },
     {
       id: 7,
       name: "produto7",
-      price: "65,00",
+      price: 65.0,
     },
     {
       id: 8,
       name: "produto8",
-      price: "83,00",
+      price: 83.0,
     },
     {
       id: 9,
       name: "produto9",
-      price: "49,00",
+      price: 49.0,
     },
     {
       id: 10,
       name: "produto10",
-      price: "423,00",
+      price: 423.0,
     },
     {
       id: 11,
       name: "produto11",
-      price: "18,00",
+      price: 18.0,
     },
     {
       id: 12,
       name: "produto12",
-      price: "194,00",
+      price: 194.0,
     },
   ];
-  const productsSelecteds: Array<IProductSelected> = [{}];
-  function addProductToCar(
-    id: number,
-    name: string,
-    value: string,
-    quantity: number
-  ) {
-    let index = productsSelecteds.findIndex((value) => value.id == id);
-    if (index < 0) {
-      productsSelecteds.push({
-        id: id,
-        name: name,
-        value: value,
-        quantity: quantity,
-      });
-      carContextToggleTotal();
-      console.log(productsSelecteds);
+
+  function toggleDisplay(id: number) {
+    // Deixar invisivel
+    let divAddToCar = document.getElementById(`divAddToCar${id}`)!;
+    let paragraphItemInCar = document.getElementById(
+      `paragraphItemInCar${id}`
+    )!;
+
+    if (divAddToCar.style.display != "none") {
+      divAddToCar.style.display = "none";
+      paragraphItemInCar.style.display = "block";
     }
   }
 
@@ -137,7 +129,7 @@ export default function Home() {
               Confira nossos produtos
             </h1>
 
-            <div className="flex flex-wrap gap-3 items-center w-full responsive:justify-center">
+            <div className="flex flex-wrap gap-3 items-center w-full justify-center">
               {produtos.map((product, key) => (
                 <Card
                   key={key}
@@ -167,20 +159,26 @@ export default function Home() {
                   <div className="flex flex-row justify-between items-center pt-[5%] text-xs">
                     {/* Item in car */}
                     <div>
-                      <p className="text-white bg-[#27AB83] rounded-xl px-2">
+                      <p
+                        id={`paragraphItemInCar${product.id}`}
+                        className="text-white bg-[#27AB83] rounded-xl px-2 hidden"
+                      >
                         Item no carrinho
                       </p>
                     </div>
                     {/* Add to car */}
                     <div
-                      className="flex items-center gap-[1vh] hover:text-blue-700"
+                      id={`divAddToCar${product.id}`}
+                      className={`flex items-center gap-[1vh] hover:text-blue-700`}
                       onClick={() => {
                         addProductToCar(
                           product.id,
                           product.name,
                           product.price,
-                          1
+                          1,
+                          `/images/card${product.id}.jpg`
                         );
+                        toggleDisplay(product.id);
                       }}
                     >
                       <p>
