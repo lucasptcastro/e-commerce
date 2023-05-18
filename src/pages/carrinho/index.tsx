@@ -50,12 +50,24 @@ export default function Carrinho() {
                       />
                       <p>{product.name}</p>
                     </div>
+
                     {/* Informações */}
-                    <p className="font-bold">{`R$ ${product.value}`}</p>
+                    <p className="font-bold">{`R$ ${product.value.toLocaleString(
+                      "pt-br",
+                      {
+                        minimumFractionDigits: 2,
+                      }
+                    )}`}</p>
                     <p className="font-bold">{product.quantity}</p>
                     <p className="font-bold">
-                      {product.value * product.quantity}
+                      {(product.value * product.quantity).toLocaleString(
+                        "pt-br",
+                        {
+                          minimumFractionDigits: 2,
+                        }
+                      )}
                     </p>
+
                     {/* Remover produto */}
                     <div>
                       <FiTrash
@@ -76,7 +88,13 @@ export default function Carrinho() {
             {/* Total value */}
             <div className="flex flex-row justify-end items-center text-2xl">
               <h1>
-                Valor total <br /> <strong>R${getTotalValueOfProducts}</strong>
+                Valor total <br />
+                <strong>
+                  R$
+                  {getTotalValueOfProducts.toLocaleString("pt-br", {
+                    minimumFractionDigits: 2,
+                  })}
+                </strong>
               </h1>
             </div>
 

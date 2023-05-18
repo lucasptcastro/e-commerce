@@ -22,6 +22,7 @@ export function CartProvider({ children }) {
 
   function addProductToCart(id, name, value, quantity, image) {
     let index = productsInCart.findIndex((value) => value.id == id);
+    let totalValue = (totalValueOfProductsInCart + value * quantity).toFixed(2);
 
     if (index < 0) {
       productsInCart.push({
@@ -33,19 +34,26 @@ export function CartProvider({ children }) {
       });
 
       addToTotal();
-      setTotalValueOfProductsInCart(
-        totalValueOfProductsInCart + value * quantity
-      );
+      setTotalValueOfProductsInCart(Number(totalValue));
     }
   }
 
   function removeProductFromCart(id) {
     let index = productsInCart.findIndex((value) => value.id == id);
+    let productsInCartList = productsInCart.filter((value) => value.id == id);
+    let valueOfProduct = productsInCartList[0].value;
+    let quantityOfProduct = productsInCartList[0].quantity;
+    let totalValue = (
+      totalValueOfProductsInCart -
+      valueOfProduct * quantityOfProduct
+    ).toFixed(2);
 
     if (index >= 0) {
       productsInCart.splice(index, 1);
 
       removeFromTotal();
+
+      setTotalValueOfProductsInCart(Number(totalValue));
     }
   }
 
