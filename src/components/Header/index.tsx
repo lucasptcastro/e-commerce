@@ -4,7 +4,7 @@ import Link from "next/link";
 import React from "react";
 
 // Components
-import { useCarContext } from "../../context/CarContext";
+import { useCartContext } from "../../context/CartContext";
 
 // Icons
 import { BsFillCartFill } from "react-icons/bs";
@@ -15,8 +15,8 @@ interface IHome {
 }
 
 const Index: React.FC<IHome> = (props) => {
-  const carContext = useCarContext();
-  const carContextTotal: any = carContext[0];
+  const cartContext = useCartContext();
+  const totalProcutsInCart: any = cartContext[0];
 
   return (
     <>
@@ -52,7 +52,7 @@ const Index: React.FC<IHome> = (props) => {
 
             {/* Car with counter */}
             <span className="absolute text-[1.8vh] text-white phones:text-sm">
-              {carContextTotal}
+              {totalProcutsInCart}
             </span>
           </div>
           <p className="phones:text-sm">Carrinho</p>
