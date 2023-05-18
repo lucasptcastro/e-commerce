@@ -6,7 +6,7 @@ import React from "react";
 // Components
 import Layout from "../layout";
 import { getAllPostIds, getProductData } from "../../lib/produtos";
-import { useCarContext } from "../../context/CarContext";
+import { useCartContext } from "../../context/CartContext";
 
 // Collects the URLs that will be used as a parameter to leave dynamic
 export async function getStaticPaths() {
@@ -29,10 +29,10 @@ export default function Post({ productData }: any) {
   const [quantity, setQuantity] = React.useState(0);
 
   // Context contain the datas about the products (id, value, name, quantity)
-  const carContext = useCarContext();
-  const carContextTotal: any = carContext[0];
+  const cartContext = useCartContext();
+  const totalProcutsInCart: any = cartContext[0];
 
-  console.log(carContextTotal);
+  console.log(totalProcutsInCart);
 
   const productsInformations = [
     {

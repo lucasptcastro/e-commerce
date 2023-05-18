@@ -6,7 +6,7 @@ import React from "react";
 
 // Components
 import Layout from "./layout";
-import { useCarContext } from "../context/CarContext";
+import { useCartContext } from "../context/CartContext";
 
 // Icons
 import { BsCart2 } from "react-icons/bs";
@@ -17,7 +17,7 @@ const { Meta } = Card;
 
 export default function Home() {
   // useContext
-  const carContext: any = useCarContext();
+  const carContext: any = useCartContext();
   const addProductToCar = carContext[2];
 
   console.log(carContext);

@@ -1,10 +1,10 @@
 import "../styles/global.css";
-import { CarProvider } from "../context/CarContext";
+import { CartProvider } from "../context/CartContext";
 
 export default function App({ Component, pageProps }) {
   return (
-    <CarProvider>
+    <CartProvider>
       <Component {...pageProps} />
-    </CarProvider>
+    </CartProvider>
   );
 }
