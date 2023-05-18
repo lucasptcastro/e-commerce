@@ -61,6 +61,7 @@ export function CartProvider({ children }) {
     productsInCart.splice(1);
 
     setTotalTotalProcutsInCart(0);
+    setTotalValueOfProductsInCart(0);
   }
 
   return (
