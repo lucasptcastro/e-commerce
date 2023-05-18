@@ -26,7 +26,7 @@ const Index: React.FC<IHome> = (props) => {
         <div>
           <Link
             href="/"
-            className="text-3xl text-black font-bold phones:text-xl"
+            className="text-[170%] text-black font-bold phones:text-3xl"
           >
             E-commerce
           </Link>
@@ -38,24 +38,25 @@ const Index: React.FC<IHome> = (props) => {
               { title: <Link href="/">E-commerce</Link> },
               { title: props.breadcrumb },
             ]}
+            className="text-[90%]"
           />
         </div>
 
         {/* Link + Car */}
-        <Link href="/carrinho" className="flex flex-row items-center gap-5">
+        <Link href="/carrinho" className="flex flex-row items-center gap-[3vh]">
           <div className="flex justify-center items-center text-center">
             {/* Icon */}
             <BsFillCartFill
-              className="absolute text-4xl phones:text-3xl"
+              className="absolute text-4xl responsive:text-[200%]"
               color="#014D40"
             />
 
             {/* Car with counter */}
-            <span className="absolute text-[1.8vh] text-white phones:text-sm">
+            <span className="absolute text-[100%] text-white responsive:text-[80%]">
               {totalProcutsInCart}
             </span>
           </div>
-          <p className="phones:text-sm">Carrinho</p>
+          <p className="responsive:text-[80%]">Carrinho</p>
         </Link>
       </div>
     </>

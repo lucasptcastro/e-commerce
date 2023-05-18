@@ -23,7 +23,6 @@ export default function Carrinho() {
   // Status 0 - Empty
   // Status 1 - With item
   // Status 2 - Cart finished
-
   const [cartStatus, setCarStatus] = React.useState(0);
 
   const cartEmptyOrNotOrFinished = () => {
@@ -31,7 +30,7 @@ export default function Carrinho() {
       if (productsInCart.slice(1).length > 0) {
         return (
           <>
-            {/* Produtos */}
+            {/* Products */}
             <div className="flex flex-col gap-5">
               {productsInCart.slice(1).map((product: any, key: number) => (
                 <>
@@ -39,27 +38,27 @@ export default function Carrinho() {
                     className="flex flex-row justify-between items-center w-full"
                     key={key}
                   >
-                    <div className="flex flex-row items-center gap-[2vh] w-[90px] h-[70px] responsive:w-full">
+                    <div className="flex flex-row items-center gap-[1vh] w-[90px] h-[70px] responsive:flex-col responsive:gap-[0.2vh]">
                       <Image
-                        className="rounded-xl shadow-md w-full h-full object-cover object-center responsive:w-full responsive:h-fit"
+                        className="rounded-xl shadow-md w-full h-full object-cover object-center"
                         alt="example"
                         src={`/images/card1.jpg`}
                         width={100}
                         height={100}
                         onClick={() => console.log(product)}
                       />
-                      <p>{product.name}</p>
+                      <p className="text-[90%]">{product.name}</p>
                     </div>
 
-                    {/* Informações */}
-                    <p className="font-bold">{`R$ ${product.value.toLocaleString(
+                    {/* Informations */}
+                    <p className="font-bold text-[90%]">{`R$ ${product.value.toLocaleString(
                       "pt-br",
                       {
                         minimumFractionDigits: 2,
                       }
                     )}`}</p>
-                    <p className="font-bold">{product.quantity}</p>
-                    <p className="font-bold">
+                    <p className="font-bold text-[90%]">{product.quantity}</p>
+                    <p className="font-bold text-[90%]">
                       {(product.value * product.quantity).toLocaleString(
                         "pt-br",
                         {
@@ -68,12 +67,11 @@ export default function Carrinho() {
                       )}
                     </p>
 
-                    {/* Remover produto */}
+                    {/* To remove product */}
                     <div>
                       <FiTrash
-                        className="hover:cursor-pointer"
+                        className="hover:cursor-pointer text-xl"
                         color="#8E2C2C"
-                        size={30}
                         onClick={() => {
                           removeProductFromCar(product.id);
                         }}
@@ -100,11 +98,11 @@ export default function Carrinho() {
 
             {/* Continue buying + Finish order */}
             <div className="flex flex-row justify-end items-center gap-[1vh]">
-              <button className="w-48 h-10 rounded-xl bg-blue-600 text-white hover:bg-blue-500 phones:mx-auto">
+              <button className="w-48 h-10 text-[80%] rounded-xl bg-blue-600 text-white hover:bg-blue-500 phones:mx-auto">
                 Continuar comprando
               </button>
               <button
-                className="w-40 h-10 rounded-xl bg-[#199473] text-white hover:bg-[#42A88C] phones:mx-auto"
+                className="w-40 h-10 text-[90%] rounded-xl bg-[#199473] text-white hover:bg-[#42A88C] phones:mx-auto"
                 onClick={() => {
                   setCarStatus(2);
                   removeAllProductsFromCart();
