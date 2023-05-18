@@ -67,68 +67,63 @@ export function getProductData(id: number) {
   const products = [
     {
       id: 1,
-      product: "produto1",
-      value: "392,00",
+      name: "produto1",
+      price: 392.0,
     },
     {
       id: 2,
-      product: "produto2",
-      value: "41,00",
+      name: "produto2",
+      price: 41.55,
     },
     {
       id: 3,
-      product: "produto3",
-      value: "63,00",
+      name: "produto3",
+      price: 63.0,
     },
     {
       id: 4,
-      product: "produto4",
-      value: "21,00",
+      name: "produto4",
+      price: 21.0,
     },
     {
       id: 5,
-      product: "produto5",
-      value: "62,00",
+      name: "produto5",
+      price: 62.0,
     },
     {
       id: 6,
-      product: "produto6",
-      value: "123,00",
+      name: "produto6",
+      price: 123.0,
     },
     {
       id: 7,
-      product: "produto7",
-      value: "65,00",
+      name: "produto7",
+      price: 65.0,
     },
-
     {
       id: 8,
-      product: "produto8",
-      value: "83,00",
+      name: "produto8",
+      price: 83.0,
     },
-
     {
       id: 9,
-      product: "produto9",
-      value: "49,00",
+      name: "produto9",
+      price: 49.0,
     },
-
     {
       id: 10,
-      product: "produto10",
-      value: "423,00",
+      name: "produto10",
+      price: 423.0,
     },
-
     {
       id: 11,
-      product: "produto11",
-      value: "18,00",
+      name: "produto11",
+      price: 18.0,
     },
-
     {
       id: 12,
-      product: "produto12",
-      value: "194,00",
+      name: "produto12",
+      price: 194.0,
     },
   ];
 
