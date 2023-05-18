@@ -1,5 +1,5 @@
-// import "../styles/global.css";
 import Head from "next/head";
+import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 
 export const metadata = {
@@ -9,17 +9,23 @@ export const metadata = {
 
 export default function RootLayout({
   children,
+  props,
 }: {
   children: React.ReactNode;
+  props: string;
 }) {
   return (
     <>
       <Head>
         <meta name="E-commerce" />
       </Head>
-      <Header />
-      <main className="flex flex-col pb-20 px-[15.5%] bg-[#EFFCF6] h-full responsive:justify-center responsive:px-[4%]">
-        {children}
+
+      <main>
+        <Navbar />
+        <div className="flex flex-col py-20 gap-[3rem] px-[15.5%] bg-[#EFFCF6] min-h-screen responsive:justify-center responsive:px-[4%]">
+          <Header breadcrumb={props} />
+          {children}
+        </div>
       </main>
     </>
   );

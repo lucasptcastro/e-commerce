@@ -2,92 +2,116 @@
 // Next
 import Image from "next/image";
 import Link from "next/link";
+import React from "react";
 
 // Components
 import Layout from "./layout";
+import { useCartContext } from "../context/CartContext";
 
 // Icons
 import { BsCart2 } from "react-icons/bs";
 
-// CSS
-import styles from "./index.module.css";
-
 // AntDesign
-import { Button, Row, Col, Card } from "antd";
+import { Card } from "antd";
 const { Meta } = Card;
 
 export default function Home() {
+  // useContext
+  const cartContext: any = useCartContext();
+  const productsInCart = cartContext[1];
+  const addProductToCart = cartContext[2];
+
+  // Products
   const produtos = [
     {
-      produto: "produto1",
-      valor: "392,00",
+      id: 1,
+      name: "produto1",
+      price: 392.0,
     },
     {
-      produto: "produto2",
-      valor: "41,00",
+      id: 2,
+      name: "produto2",
+      price: 41.55,
     },
     {
-      produto: "produto3",
-      valor: "63,00",
+      id: 3,
+      name: "produto3",
+      price: 63.0,
     },
     {
-      produto: "produto4",
-      valor: "21,00",
+      id: 4,
+      name: "produto4",
+      price: 21.0,
     },
     {
-      produto: "produto5",
-      valor: "62,00",
+      id: 5,
+      name: "produto5",
+      price: 62.0,
     },
     {
-      produto: "produto6",
-      valor: "123,00",
+      id: 6,
+      name: "produto6",
+      price: 123.0,
     },
     {
-      produto: "produto7",
-      valor: "65,00",
+      id: 7,
+      name: "produto7",
+      price: 65.0,
     },
     {
-      produto: "produto8",
-      valor: "83,00",
+      id: 8,
+      name: "produto8",
+      price: 83.0,
     },
     {
-      produto: "produto9",
-      valor: "49,00",
+      id: 9,
+      name: "produto9",
+      price: 49.0,
     },
     {
-      produto: "produto10",
-      valor: "423,00",
+      id: 10,
+      name: "produto10",
+      price: 423.0,
     },
     {
-      produto: "produto11",
-      valor: "18,00",
+      id: 11,
+      name: "produto11",
+      price: 18.0,
     },
     {
-      produto: "produto12",
-      valor: "194,00",
+      id: 12,
+      name: "produto12",
+      price: 194.0,
     },
   ];
 
+  const verifyProductInCart = (id: number, tag: string) => {
+    let index = productsInCart
+      .slice(1)
+      .findIndex((value: any) => value.id == id);
+
+    if (tag == "p") {
+      if (index > -1) {
+        return "block";
+      } else {
+        return "hidden";
+      }
+    } else {
+      if (index > -1) {
+        return "hidden";
+      } else {
+        return "block";
+      }
+    }
+  };
+
   return (
     <>
-      <Layout>
+      <Layout props={"Home"}>
         <div className="flex flex-col gap-12">
-          {/* Logo + Carrinho */}
-          <div className="flex flex-row justify-between items-center pt-20">
-            <Link
-              href="/"
-              className="text-3xl text-black font-bold phones:text-xl"
-            >
-              E-commerce
-            </Link>
-            <div className="flex flex-row items-center gap-2">
-              <BsCart2 className="text-3xl phones:text-xl" />
-              <p className="phones:text-sm">Carrinho</p>
-            </div>
-          </div>
-
-          {/* Card principal */}
+          {/* Principal card */}
           <div className="flex flex-col gap-10 py-10 px-[3%] rounded-xl bg-[#8EEDC7]">
+            {/* Informations banner */}
             <h3 className="text-2xl font-bold phones:text-center phones:text-base">
               Olá, somos o E-commerce! Somos 100% nacional e o maior revendedor
               de produtos eletrônicos do país!
@@ -96,58 +120,94 @@ export default function Home() {
               Contate nossos revendedores pelo núnero: <br />
               (84) 99999-9999
             </p>
-            <button className="w-40 h-10 rounded-xl bg-blue-600 text-white hover:bg-blue-500 phones:mx-auto">
-              Comprar agora
-            </button>
+
+            {/* Buy now button */}
+            <a href="#products">
+              <button className="w-40 h-10 rounded-xl bg-blue-600 text-white hover:bg-blue-500 phones:mx-auto">
+                Comprar agora
+              </button>
+            </a>
           </div>
 
-          {/* Produtos */}
-          <div className="flex flex-col gap-10 phones:w-full">
+          {/* Products */}
+          <section className="flex flex-col gap-10 phones:w-full" id="products">
             <h1 className="font-bold text-2xl phones:text-center">
               Confira nossos produtos
             </h1>
 
-            <div className="flex flex-wrap gap-3 items-center w-full responsive:justify-center">
-              {produtos.map((value, key) => (
-                <Link href={`/produto/${key + 1}`} key={key}>
-                  <Card
-                    className="w-[315px] shadow-md rounded-2xl"
-                    hoverable
-                    cover={
+            <div className="flex flex-wrap gap-3 items-center w-full justify-center">
+              {produtos.map((product, key) => (
+                <Card
+                  key={key}
+                  className="w-[315px] shadow-md rounded-2xl"
+                  hoverable
+                  cover={
+                    <Link href={`/produto/${product.id}`}>
                       <Image
                         className="w-full h-[200px] object-cover object-center responsive:h-fit"
                         alt="example"
-                        src={`/images/card${key + 1}.jpg`}
+                        src={`/images/card${product.id}.jpg`}
                         width={500}
                         height={500}
                       />
-                    }
-                  >
-                    <Meta
-                      title={
-                        <div className="flex justify-between">
-                          <p className="font-bold">{value.produto}</p>
-                          <p>R${value.valor}</p>
-                        </div>
-                      }
-                      description="Lorem ipsum dollor at amet ipsum dollor lorem"
-                    />
-                    <div className="flex justify-end gap-[2%] items-center py-[1%]">
-                      <div className={styles.addedToCar}>
+                    </Link>
+                  }
+                >
+                  <Meta
+                    title={
+                      <div className="flex justify-between">
+                        <p className="font-bold">{product.name}</p>
                         <p>
-                          <span></span>
-                          Adicionar ao carrinho
+                          R$
+                          {product.price.toLocaleString("pt-br", {
+                            minimumFractionDigits: 2,
+                          })}
                         </p>
                       </div>
-                      <div>
-                        <BsCart2 className="text-lg hover:text-blue-700 hover:-rotate-12" />
-                      </div>
+                    }
+                    description="Lorem ipsum dollor at amet ipsum dollor lorem"
+                  />
+                  <div className="flex flex-row justify-between items-center pt-[5%] text-xs">
+                    {/* Item in car */}
+                    <div>
+                      <p
+                        id={`paragraphItemInCar${product.id}`}
+                        className={`text-white bg-[#27AB83] rounded-xl px-2 ${verifyProductInCart(
+                          product.id,
+                          "p"
+                        )}`}
+                      >
+                        Item no carrinho
+                      </p>
                     </div>
-                  </Card>
-                </Link>
+                    {/* Add to car */}
+                    <div
+                      id={`divAddToCar${product.id}`}
+                      className={`flex items-center gap-[1vh] hover:text-blue-700 ${verifyProductInCart(
+                        product.id,
+                        "div"
+                      )}`}
+                      onClick={() => {
+                        addProductToCart(
+                          product.id,
+                          product.name,
+                          product.price,
+                          1,
+                          `/images/card${product.id}.jpg`
+                        );
+                      }}
+                    >
+                      <p>
+                        <span></span>
+                        Adicionar ao carrinho
+                      </p>
+                      <BsCart2 />
+                    </div>
+                  </div>
+                </Card>
               ))}
             </div>
-          </div>
+          </section>
         </div>
       </Layout>
     </>

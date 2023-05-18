@@ -1,21 +1,12 @@
 "use client";
 // Next
 import Image from "next/image";
-import Link from "next/link";
-
 // React
 import React from "react";
-
 // Components
 import Layout from "../layout";
-
-// Icons
-import { BsCart2 } from "react-icons/bs";
-
-// AntDesign
-import { Breadcrumb } from "antd";
-
 import { getAllPostIds, getProductData } from "../../lib/produtos";
+import { useCartContext } from "../../context/CartContext";
 
 // Collects the URLs that will be used as a parameter to leave dynamic
 export async function getStaticPaths() {
@@ -25,7 +16,6 @@ export async function getStaticPaths() {
     fallback: false,
   };
 }
-
 export async function getStaticProps({ params }: any) {
   const productData = getProductData(params.id);
   return {
@@ -37,6 +27,12 @@ export async function getStaticProps({ params }: any) {
 
 export default function Post({ productData }: any) {
   const [quantity, setQuantity] = React.useState(0);
+
+  // Context contain the datas about the products (id, value, name, quantity)
+  const cartContext = useCartContext();
+  const totalProcutsInCart: any = cartContext[0];
+
+  console.log(totalProcutsInCart);
 
   const productsInformations = [
     {
@@ -78,32 +74,11 @@ export default function Post({ productData }: any) {
       detail: "Lorem ipsum dollor at amet",
     },
   ];
+
   return (
     <>
-      <Layout>
+      <Layout props={"Produto"}>
         <div className="flex flex-col gap-12">
-          {/* Logo + Carrinho */}
-          <div className="flex flex-row justify-between items-center pt-20">
-            <div>
-              <Link
-                href="/"
-                className="text-3xl text-black font-bold phones:text-xl"
-              >
-                E-commerce
-              </Link>
-
-              {/* Breadcrumb */}
-              <Breadcrumb
-                separator=">"
-                items={[{ title: "Home", href: "/" }, { title: "Produto" }]}
-              />
-            </div>
-            <div className="flex flex-row items-center gap-2">
-              <BsCart2 className="text-3xl phones:text-xl" />
-              <p className="phones:text-sm">Carrinho</p>
-            </div>
-          </div>
-
           {/* Imagem + Descrição */}
           <div className="flex flex-row justify-between h-[500px] gap-[3%] responsive:flex-col responsive:w-full responsive:h-fit">
             {/* Imagem */}
