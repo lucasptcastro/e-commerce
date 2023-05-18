@@ -17,10 +17,9 @@ const { Meta } = Card;
 
 export default function Home() {
   // useContext
-  const carContext: any = useCartContext();
-  const addProductToCar = carContext[2];
-
-  console.log(carContext);
+  const cartContext: any = useCartContext();
+  const productsInCart = cartContext[1];
+  const addProductToCart = cartContext[2];
 
   // Products
   const produtos = [
@@ -86,18 +85,25 @@ export default function Home() {
     },
   ];
 
-  function toggleDisplay(id: number) {
-    // Deixar invisivel
-    let divAddToCar = document.getElementById(`divAddToCar${id}`)!;
-    let paragraphItemInCar = document.getElementById(
-      `paragraphItemInCar${id}`
-    )!;
+  const verifyProductInCart = (id: number, tag: string) => {
+    let index = productsInCart
+      .slice(1)
+      .findIndex((value: any) => value.id == id);
 
-    if (divAddToCar.style.display != "none") {
-      divAddToCar.style.display = "none";
-      paragraphItemInCar.style.display = "block";
+    if (tag == "p") {
+      if (index > -1) {
+        return "block";
+      } else {
+        return "hidden";
+      }
+    } else {
+      if (index > -1) {
+        return "hidden";
+      } else {
+        return "block";
+      }
     }
-  }
+  };
 
   return (
     <>
@@ -151,7 +157,12 @@ export default function Home() {
                     title={
                       <div className="flex justify-between">
                         <p className="font-bold">{product.name}</p>
-                        <p>R${product.price}</p>
+                        <p>
+                          R$
+                          {product.price.toLocaleString("pt-br", {
+                            minimumFractionDigits: 2,
+                          })}
+                        </p>
                       </div>
                     }
                     description="Lorem ipsum dollor at amet ipsum dollor lorem"
@@ -161,7 +172,10 @@ export default function Home() {
                     <div>
                       <p
                         id={`paragraphItemInCar${product.id}`}
-                        className="text-white bg-[#27AB83] rounded-xl px-2 hidden"
+                        className={`text-white bg-[#27AB83] rounded-xl px-2 ${verifyProductInCart(
+                          product.id,
+                          "p"
+                        )}`}
                       >
                         Item no carrinho
                       </p>
@@ -169,16 +183,18 @@ export default function Home() {
                     {/* Add to car */}
                     <div
                       id={`divAddToCar${product.id}`}
-                      className={`flex items-center gap-[1vh] hover:text-blue-700`}
+                      className={`flex items-center gap-[1vh] hover:text-blue-700 ${verifyProductInCart(
+                        product.id,
+                        "div"
+                      )}`}
                       onClick={() => {
-                        addProductToCar(
+                        addProductToCart(
                           product.id,
                           product.name,
                           product.price,
                           1,
                           `/images/card${product.id}.jpg`
                         );
-                        toggleDisplay(product.id);
                       }}
                     >
                       <p>
