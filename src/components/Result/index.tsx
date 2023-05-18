@@ -9,7 +9,7 @@ const App: React.FC = () => (
     subTitle="Número da ordem: 2017182818828182881 Você receberá em seu e-mail a NF da compra"
     extra={[
       <Button type="default" key="console">
-        <Link href="/">Voltar ao ínicio</Link>
+        <Link href="/">Voltar ao início</Link>
       </Button>,
     ]}
   />
