@@ -25,7 +25,11 @@ export default function RootLayout({
 
       <main>
         <Navbar />
-        <div className="flex flex-col py-20 gap-[3rem] px-[15.5%] bg-bodyBg min-h-screen responsive:justify-center responsive:px-[4%]">
+        <div
+          className={`flex flex-col py-20 gap-[3rem] px-[15.5%] bg-bodyBg min-h-screen responsive:${
+            props == "Carrinho" ? "" : "justify-center"
+          } responsive:px-[4%]`}
+        >
           <Header breadcrumb={props} />
           {children}
         </div>
