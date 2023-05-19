@@ -26,13 +26,48 @@ export async function getStaticProps({ params }: any) {
 }
 
 export default function Post({ productData }: any) {
-  const [quantity, setQuantity] = React.useState(0);
-
   // Context contain the datas about the products (id, value, name, quantity)
   const cartContext = useCartContext();
   const totalProcutsInCart: any = cartContext[0];
+  const addToQuantity: any = cartContext[6];
+  const removeFromQuantity: any = cartContext[7];
+  const getProductInCartById: any = cartContext[8];
+  const addProductToCart: any = cartContext[2];
 
-  console.log(totalProcutsInCart);
+  const productInCart = getProductInCartById(productData.data[0].id);
+
+  // If in the first moment the product in cart, quantity = 1
+  // Else quantity = 0
+  const [quantity, setQuantity] = React.useState(
+    productInCart.length > 0 ? 1 : 0
+  );
+
+  const verifyIfProductIsInCartForToAdd = () => {
+    // If product is in cart, added +1 to the quantity
+    if (productInCart.length > 0) {
+      addToQuantity(productData.data[0].id);
+      setQuantity(productInCart[0].quantity);
+    }
+    // If product is not in cart, added in the cart
+    else {
+      addProductToCart(
+        productData.data[0].id,
+        productData.data[0].name,
+        productData.data[0].price,
+        1,
+        `/images/card${productData.data[0].id}.jpg`
+      );
+      setQuantity(1);
+    }
+  };
+
+  const verifyIfProductIsInCartForToRemove = () => {
+    // If product is in cart, remove 1 to the quantity
+    if (productInCart.length > 0) {
+      removeFromQuantity(productData.data[0].id);
+      setQuantity(productInCart[0].quantity);
+    }
+  };
 
   const productsInformations = [
     {
@@ -97,7 +132,7 @@ export default function Post({ productData }: any) {
               {/* Título do produto */}
               <div className="flex flex-col gap-5">
                 <h1 className="font-bold text-3xl">
-                  {productData.data[0].product}
+                  {productData.data[0].name}
                 </h1>
                 <p>Lorem ipsum dollor at amet ipsum dollor lorem</p>
               </div>
@@ -107,7 +142,7 @@ export default function Post({ productData }: any) {
               {/* Valor */}
               <div>
                 <h3 className="font-bold text-2xl">
-                  R${productData.data[0].value}
+                  R${productData.data[0].price}
                 </h3>
                 <p className="text-xs">Ou em 12x de R$ 45,00</p>
               </div>
@@ -116,9 +151,7 @@ export default function Post({ productData }: any) {
               <div className="flex flex-row justify-between items-center text-3xl px-[10%] w-[50%] h-[10%] rounded-md bg-[#ECECEC] responsive:mx-auto">
                 <button
                   onClick={() => {
-                    if (quantity != 0) {
-                      setQuantity(quantity - 1);
-                    }
+                    verifyIfProductIsInCartForToRemove();
                   }}
                   className="text-3xl font-bold"
                 >
@@ -126,7 +159,9 @@ export default function Post({ productData }: any) {
                 </button>
                 <span className="text-3xl font-bold">{quantity}</span>
                 <button
-                  onClick={() => setQuantity(quantity + 1)}
+                  onClick={() => {
+                    verifyIfProductIsInCartForToAdd();
+                  }}
                   className="text-3xl font-bold"
                 >
                   +
