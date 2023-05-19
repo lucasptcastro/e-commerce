@@ -1,11 +1,16 @@
 "use client";
-// Next
+// Default
 import Image from "next/image";
-// React
+import Link from "next/link";
 import React from "react";
 // Components
 import Layout from "../layout";
-import { getAllPostIds, getProductData } from "../../lib/produtos";
+import {
+  getAllPostIds,
+  getProductData,
+  getProductInformationsById,
+  getProductDetailsById,
+} from "../../lib/products";
 import { useCartContext } from "../../context/CartContext";
 
 // Collects the URLs that will be used as a parameter to leave dynamic
@@ -26,20 +31,24 @@ export async function getStaticProps({ params }: any) {
 }
 
 export default function Post({ productData }: any) {
-  // Context contain the datas about the products (id, value, name, quantity)
+  // useContext
   const cartContext = useCartContext();
-  const totalProcutsInCart: any = cartContext[0];
   const addToQuantity: any = cartContext[6];
   const removeFromQuantity: any = cartContext[7];
   const getProductInCartById: any = cartContext[8];
   const addProductToCart: any = cartContext[2];
-
   const productInCart = getProductInCartById(productData.data[0].id);
+
+  // products
+  const productsDetails = getProductDetailsById(productData.data[0].id);
+  const productsInformations = getProductInformationsById(
+    productData.data[0].id
+  );
 
   // If in the first moment the product in cart, quantity = 1
   // Else quantity = 0
   const [quantity, setQuantity] = React.useState(
-    productInCart.length > 0 ? 1 : 0
+    productInCart.length > 0 ? productInCart[0].quantity : 0
   );
 
   const verifyIfProductIsInCartForToAdd = () => {
@@ -69,47 +78,6 @@ export default function Post({ productData }: any) {
     }
   };
 
-  const productsInformations = [
-    {
-      id: "01",
-      information: "Lorem ipsum dollor at amet",
-    },
-    {
-      id: "02",
-      information: "Lorem ipsum dollor at amet",
-    },
-    {
-      id: "03",
-      information: "Lorem ipsum dollor at amet",
-    },
-    {
-      id: "04",
-      information: "Lorem ipsum dollor at amet",
-    },
-  ];
-  const productsDetails = [
-    {
-      id: "01",
-      detail: "Lorem ipsum dollor at amet",
-    },
-    {
-      id: "02",
-      detail: "Lorem ipsum dollor at amet",
-    },
-    {
-      id: "03",
-      detail: "Lorem ipsum dollor at amet",
-    },
-    {
-      id: "04",
-      detail: "Lorem ipsum dollor at amet",
-    },
-    {
-      id: "05",
-      detail: "Lorem ipsum dollor at amet",
-    },
-  ];
-
   return (
     <>
       <Layout props={"Produto"}>
@@ -121,7 +89,7 @@ export default function Post({ productData }: any) {
               <Image
                 className="rounded-xl shadow-md w-full h-[500px] object-cover object-center responsive:w-full responsive:h-fit"
                 alt="example"
-                src={`/images/card1.jpg`}
+                src={`/images/product${productData.data[0].id}.jpg`}
                 width={500}
                 height={500}
               />
@@ -137,14 +105,22 @@ export default function Post({ productData }: any) {
                 <p>Lorem ipsum dollor at amet ipsum dollor lorem</p>
               </div>
 
-              <hr />
+              <hr className="opacity-20" />
 
               {/* Valor */}
               <div>
                 <h3 className="font-bold text-2xl">
-                  R${productData.data[0].price}
+                  R$
+                  {productData.data[0].price.toLocaleString("pt-br", {
+                    minimumFractionDigits: 2,
+                  })}
                 </h3>
-                <p className="text-xs">Ou em 12x de R$ 45,00</p>
+                <p className="text-xs">
+                  Ou em 12x de R$
+                  {(productData.data[0].price / 12).toLocaleString("pt-br", {
+                    minimumFractionDigits: 2,
+                  })}
+                </p>
               </div>
 
               {/* Quantidade */}
@@ -169,10 +145,12 @@ export default function Post({ productData }: any) {
               </div>
 
               {/* Comprar */}
-              <hr />
-              <button className="w-full h-10 rounded-xl bg-[#199473] text-white hover:bg-[#27AB83] phones:mx-auto">
-                Comprar
-              </button>
+              <hr className="opacity-20" />
+              <Link href="/carrinho">
+                <button className="w-full h-10 rounded-xl bg-textBlue text-white hover:bg-colorBlueHover phones:mx-auto">
+                  Comprar
+                </button>
+              </Link>
             </div>
           </div>
 
@@ -183,7 +161,7 @@ export default function Post({ productData }: any) {
               <h3 className="font-bold text-3xl phones:text-xl">
                 Informações do produto
               </h3>
-              <hr className="w-[95%]" />
+              <hr className="w-[95%] opacity-20" />
 
               <div className="flex flex-col pt-[2%] gap-[1vh]">
                 {productsInformations.map((info, key) => (
@@ -200,7 +178,7 @@ export default function Post({ productData }: any) {
               <h3 className="font-bold text-3xl phones:text-xl">
                 Detalhes do produto
               </h3>
-              <hr />
+              <hr className="opacity-20" />
 
               <div className="flex flex-col pt-[2%] gap-[1vh]">
                 {productsDetails.map((detail, key) => (
