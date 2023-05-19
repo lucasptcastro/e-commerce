@@ -10,6 +10,7 @@ import { useCartContext } from "../../context/CartContext";
 import Result from "../../components/Result";
 // Icons
 import { FiTrash } from "react-icons/fi";
+import Link from "next/link";
 
 export default function Carrinho() {
   // useContext
@@ -19,10 +20,9 @@ export default function Carrinho() {
   const removeProductFromCar = cartContext[3];
   const getTotalValueOfProducts = cartContext[4];
   const removeAllProductsFromCart = cartContext[5];
+  const getTotalValueOfProductsInCart = cartContext[9];
 
-  // Status 0 - Empty
-  // Status 1 - With item
-  // Status 2 - Cart finished
+  // Status 0 - Empty | Status 1 - With item | Status 2 - Cart finished
   const [cartStatus, setCarStatus] = React.useState(0);
 
   const cartEmptyOrNotOrFinished = () => {
@@ -45,7 +45,6 @@ export default function Carrinho() {
                         src={`/images/card1.jpg`}
                         width={100}
                         height={100}
-                        onClick={() => console.log(product)}
                       />
                       <p className="text-[90%]">{product.name}</p>
                     </div>
@@ -89,7 +88,7 @@ export default function Carrinho() {
                 Valor total <br />
                 <strong>
                   R$
-                  {getTotalValueOfProducts.toLocaleString("pt-br", {
+                  {getTotalValueOfProductsInCart().toLocaleString("pt-br", {
                     minimumFractionDigits: 2,
                   })}
                 </strong>
