@@ -103,6 +103,19 @@ export function CartProvider({ children }) {
     return productsInCartList;
   };
 
+  function getTotalValueOfProductsInCart() {
+    if (productsInCart.length > 1) {
+      let total = 0;
+      for (var i = 1; i < productsInCart.slice(1).length + 1; i++) {
+        total = total + productsInCart[i].value * productsInCart[i].quantity;
+      }
+      console.log(`VALOR TOTAL: ${total}`);
+      setTotalValueOfProductsInCart(total);
+    }
+
+    return Number(totalValueOfProductsInCart);
+  }
+
   return (
     <CartContext.Provider
       value={[
@@ -115,6 +128,7 @@ export function CartProvider({ children }) {
         addToQuantity,
         removeFromQuantity,
         getProductInCartById,
+        getTotalValueOfProductsInCart,
       ]}
     >
       {children}
