@@ -46,10 +46,7 @@ const Index: React.FC<IHome> = (props) => {
         <Link href="/carrinho" className="flex flex-row items-center gap-[3vh]">
           <div className="flex justify-center items-center text-center">
             {/* Icon */}
-            <BsFillCartFill
-              className="absolute text-4xl responsive:text-[200%]"
-              color="#014D40"
-            />
+            <BsFillCartFill className="absolute text-4xl responsive:text-[200%] text-textBlue" />
 
             {/* Car with counter */}
             <span className="absolute text-[100%] text-white responsive:text-[80%]">
