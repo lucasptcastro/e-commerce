@@ -1,7 +1,7 @@
 "use client";
-// Next
+// Default
 import Image from "next/image";
-// React
+import Link from "next/link";
 import React from "react";
 // Components
 import Layout from "../layout";
@@ -10,7 +10,6 @@ import { useCartContext } from "../../context/CartContext";
 import Result from "../../components/Result";
 // Icons
 import { FiTrash } from "react-icons/fi";
-import Link from "next/link";
 
 export default function Carrinho() {
   // useContext
@@ -18,7 +17,6 @@ export default function Carrinho() {
   const productsInCart = cartContext[1];
 
   const removeProductFromCar = cartContext[3];
-  const getTotalValueOfProducts = cartContext[4];
   const removeAllProductsFromCart = cartContext[5];
   const getTotalValueOfProductsInCart = cartContext[9];
 
@@ -35,36 +33,43 @@ export default function Carrinho() {
               {productsInCart.slice(1).map((product: any, key: number) => (
                 <>
                   <div
-                    className="flex flex-row justify-between items-center w-full"
+                    className="flex flex-row justify-between items-center w-full h-[10vh]"
                     key={key}
                   >
-                    <div className="flex flex-row items-center gap-[1vh] w-[90px] h-[70px] responsive:flex-col responsive:gap-[0.2vh]">
-                      <Image
-                        className="rounded-xl shadow-md w-full h-full object-cover object-center"
-                        alt="example"
-                        src={`/images/card1.jpg`}
-                        width={100}
-                        height={100}
-                      />
+                    <div className="flex flex-row items-center gap-[1vh] responsive:flex-col responsive:gap-[0.2vh] w-[25%]">
+                      <Link
+                        href={`/produto/${product.id}`}
+                        className="W-[90px]"
+                      >
+                        <Image
+                          className="rounded-xl shadow-md w-full h-full object-cover object-center"
+                          alt="example"
+                          src={`/images/product${product.id}.jpg`}
+                          width={100}
+                          height={100}
+                        />
+                      </Link>
                       <p className="text-[90%]">{product.name}</p>
                     </div>
 
                     {/* Informations */}
-                    <p className="font-bold text-[90%]">{`R$ ${product.value.toLocaleString(
-                      "pt-br",
-                      {
-                        minimumFractionDigits: 2,
-                      }
-                    )}`}</p>
-                    <p className="font-bold text-[90%]">{product.quantity}</p>
-                    <p className="font-bold text-[90%]">
-                      {(product.value * product.quantity).toLocaleString(
+                    <div className="flex justify-between w-[50%]">
+                      <p className="font-bold text-[90%]">{`R$ ${product.value.toLocaleString(
                         "pt-br",
                         {
                           minimumFractionDigits: 2,
                         }
-                      )}
-                    </p>
+                      )}`}</p>
+                      <p className="font-bold text-[90%]">{product.quantity}</p>
+                      <p className="font-bold text-[90%]">
+                        {(product.value * product.quantity).toLocaleString(
+                          "pt-br",
+                          {
+                            minimumFractionDigits: 2,
+                          }
+                        )}
+                      </p>
+                    </div>
 
                     {/* To remove product */}
                     <div>
@@ -77,14 +82,14 @@ export default function Carrinho() {
                       />
                     </div>
                   </div>
-                  <hr />
+                  <hr className="opacity-20" />
                 </>
               ))}
             </div>
 
             {/* Total value */}
             <div className="flex flex-row justify-end items-center text-2xl">
-              <h1>
+              <h1 className="text-end">
                 Valor total <br />
                 <strong>
                   R$
@@ -97,11 +102,11 @@ export default function Carrinho() {
 
             {/* Continue buying + Finish order */}
             <div className="flex flex-row justify-end items-center gap-[1vh]">
-              <button className="w-48 h-10 text-[80%] rounded-xl bg-blue-600 text-white hover:bg-blue-500 phones:mx-auto">
+              <button className="w-48 h-10 text-[80%] rounded-xl bg-[#199473] text-white hover:bg-[#42A88C] phones:mx-auto">
                 Continuar comprando
               </button>
               <button
-                className="w-40 h-10 text-[90%] rounded-xl bg-[#199473] text-white hover:bg-[#42A88C] phones:mx-auto"
+                className="w-40 h-10 text-[90%] rounded-xl bg-textBlue text-white hover:bg-colorBlueHover phones:mx-auto"
                 onClick={() => {
                   setCarStatus(2);
                   removeAllProductsFromCart();
